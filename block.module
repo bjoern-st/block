@@ -8,11 +8,16 @@
  * Implements hook_permission().
  */
 function block_permission() {
-  return array(
+  $permissions = array(
     'administer blocks' => array(
       'title' => t('Administer custom blocks'),
     ),
   );
+  if (module_exists('translation')) {
+    $permissions['translate blocks'] = array(
+      'title' => t('Translate custom blocks') );
+  }
+  return $permissions;
 }
 
 /**
@@ -55,7 +60,7 @@ function block_menu() {
     'title' => 'Translate block',
     'page callback' => 'backdrop_get_form',
     'page arguments' => array('block_custom_block_translate_list', 4),
-    'access arguments' => array('administer blocks'),
+    'access arguments' => array('translate blocks'),
     'type' => MENU_LOCAL_TASK,
     'context' => MENU_CONTEXT_NONE,
     'file' => 'block.admin.inc',
@@ -64,7 +69,7 @@ function block_menu() {
     'title' => 'Translate block',
     'page callback' => 'backdrop_get_form',
     'page arguments' => array('block_custom_block_translate', 4, 6),
-    'access arguments' => array('administer blocks'),
+    'access arguments' => array('translate blocks'),
     'type' => MENU_LOCAL_TASK,
     'context' => MENU_CONTEXT_NONE,
     'file' => 'block.admin.inc',
