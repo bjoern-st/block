@@ -219,6 +219,7 @@ function block_custom_block_form($edit = array(), $stand_alone = TRUE) {
     'title' => '',
     'body' => array('value' => '', 'format' => NULL),
     'delta' => NULL,
+    'default_language' => '',
   );
   $form['title'] = array(
     '#type' => 'textfield',
