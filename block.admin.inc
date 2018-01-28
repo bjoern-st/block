@@ -75,8 +75,10 @@ function block_admin_configure($form, &$form_state, $delta = NULL) {
       'info' => '',
       'title' => '',
       'body' => array('value' => '', 'format' => NULL),
-      'language_select' => array(),
     );
+    if (module_exists('language')) {
+      $custom_block['language_select'] => array(),
+    }
   }
   if ($custom_block['info']) {
     backdrop_set_title(t("'%name' block", array('%name' => $custom_block['info'])), PASS_THROUGH);
