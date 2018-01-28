@@ -321,7 +321,7 @@ function block_custom_block_form($edit = array(), $stand_alone = TRUE) {
  */
 function block_custom_block_save(array $edit, $delta = NULL, $langcode = NULL) {
   $translateable = module_exists('translation');
-dpm($edit);
+
   $delta = $delta ? $delta : preg_replace('/[^a-z0-9_]+/', '_', strtolower($edit['info']));
   $block = block_custom_block_load($delta);
   if (!$block) {
