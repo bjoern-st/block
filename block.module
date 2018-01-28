@@ -261,6 +261,23 @@ function block_custom_block_form($edit = array(), $stand_alone = TRUE) {
     '#weight' => -17,
   );
 
+  // Add language select dropdown if variable is set.
+  // Should only be set if adding a new block.
+  if (isset($edit['language_select'])) {
+    $options = array('' => t('Language neutral'));
+    $language_list = language_list();
+    foreach ($language_list as $value) {
+      $options[$value->langcode] = $value->name;
+    }
+
+    $form['language_select'] = array(
+      '#type' => 'select',
+      '#title' => t('Language'),
+      '#description' => 'Please select the default language for this custum block.',
+      '#options' => $options,
+    );
+  }
+
   // When displaying as part of the Layout UI.
   if (!$stand_alone) {
     $form['title']['#states'] = array(
