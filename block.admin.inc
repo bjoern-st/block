@@ -230,6 +230,24 @@ function block_custom_block_translate_list($form, &$form_state, $delta) {
     t('Operations'),
   );
 
+  $rows = array();
+
+  if (isset($custom_block['default_language']) && ($custom_block['default_language'] == LANGUAGE_NONE)) {
+    $row[] = t('Language neutral');
+    $row[] = t('Source');
+    $links = array();
+    $links['edit'] = array(
+      'title' => t('Edit'),
+      'href' => 'admin/structure/block/manage/' . $delta . '/configure',
+    );
+    $operations = array(
+      '#type' => 'operations',
+      '#links' => $links,
+    );
+    $row[] = array('data' => $operations);
+    $rows[] = $row;
+  }
+
   foreach ($language_list as $langcode => $item) {
     $row = array();
     $row[] = t($item->name);
