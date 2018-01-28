@@ -271,7 +271,7 @@ function block_custom_block_form($edit = array(), $stand_alone = TRUE) {
       $options[$value->langcode] = $value->name;
     }
 
-    $form['language_select'] = array(
+    $form['default_language'] = array(
       '#type' => 'select',
       '#title' => t('Language'),
       '#description' => 'Please select the default language for this custum block.',
@@ -320,7 +320,7 @@ function block_custom_block_form($edit = array(), $stand_alone = TRUE) {
  */
 function block_custom_block_save(array $edit, $delta = NULL, $langcode = NULL) {
   $translateable = module_exists('translation');
-
+dpm($edit);
   $delta = $delta ? $delta : preg_replace('/[^a-z0-9_]+/', '_', strtolower($edit['info']));
   $block = block_custom_block_load($delta);
   if (!$block) {
