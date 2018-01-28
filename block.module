@@ -168,6 +168,8 @@ function block_block_view($delta = '') {
  *
  * @param $delta
  *   ID of the block to get information for.
+ * @param $langcode
+ *   The language code for loading the block.
  *
  * @return array
  *   Associative array of information stored in configuration for this block, or FALSE if it doesn't exist
@@ -318,6 +320,9 @@ function block_custom_block_form($edit = array(), $stand_alone = TRUE) {
  *   Machine name of the block to save, comprised of lower-case letters,
  *   numbers, and underscores. Note: NULL values are still accepted when
  *   creating new nodes to maintain API contiguity.
+ * @param $langcode
+ *   The language code for the block.
+ *   If set, only the translation is saved.
  */
 function block_custom_block_save(array $edit, $delta = NULL, $langcode = NULL) {
   $translateable = module_exists('translation');
