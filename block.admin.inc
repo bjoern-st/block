@@ -233,7 +233,13 @@ function block_custom_block_translate_list($form, &$form_state, $delta) {
   foreach ($language_list as $langcode => $item) {
     $row = array();
     $row[] = t($item->name);
-    $row[] = isset($custom_block['translations'][$langcode]) ? t('Translated') : t('Not Translated');
+    // Check if this is the source language.
+    if (isset($custom_block['default_language']) && ($langcode == $custom_block['default_language'])) {
+      $row[] = t('Source');
+    }
+    else {
+      $row[] = isset($custom_block['translations'][$langcode]) ? t('Translated') : t('Not Translated');
+    }
     $links = array();
     $links['edit'] = array(
       'title' => t('Edit'),
