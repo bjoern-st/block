@@ -75,7 +75,7 @@ function block_admin_configure($form, &$form_state, $delta = NULL) {
       'info' => '',
       'title' => '',
       'body' => array('value' => '', 'format' => NULL),
-      'default_language' => '',
+      'default_language' => LANGUAGE_NONE,
     );
     if (module_exists('language')) {
       $custom_block['language_select'] => array(),
