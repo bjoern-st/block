@@ -188,6 +188,7 @@ function block_custom_block_load($delta, $langcode = NULL) {
       if ($langcode != NULL) {
         if (isset($block['translations'][$langcode])) {
           // replace title and body
+          $block['info'] = isset($block['translations'][$langcode]['info']) ? $block['translations'][$langcode]['info'] : $block['info'];
           $block['title'] = isset($block['translations'][$langcode]['title']) ? $block['translations'][$langcode]['title'] : $block['title'];
           $block['body'] = isset($block['translations'][$langcode]['body']) ? $block['translations'][$langcode]['body'] : $block['body'];
         }
@@ -346,6 +347,9 @@ dpm($edit);
   // store the translation.
   if ($translateable && ($langcode != NULL)) {
     // store the translations
+    if (isset($edit['info'])) {
+      $block['translations'][$langcode]['info'] = $edit['info'];
+    }
     if (isset($edit['title'])) {
       $block['translations'][$langcode]['title'] = $edit['title'];
     }
