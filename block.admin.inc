@@ -219,6 +219,19 @@ function block_custom_block_delete_submit($form, &$form_state) {
 }
 
 
+/**
+ * Form constructor for the block translation list.
+ *
+ * Also used by block_add_block_form() for adding a new custom block.
+ *
+ * @param $form
+ *   The form.
+ * @param $form_state
+ *   The form_state
+ * @param $delta
+ *   Unique ID of the block within the context of $module.
+ * @ingroup forms
+ */
 function block_custom_block_translate_list($form, &$form_state, $delta) {
   $custom_block = block_custom_block_load($delta);
 
@@ -280,7 +293,14 @@ function block_custom_block_translate_list($form, &$form_state, $delta) {
 }
 
 
-
+/**
+ * [block_custom_block_translate description]
+ * @param  [type] $form        [description]
+ * @param  [type] &$form_state [description]
+ * @param  [type] $delta       [description]
+ * @param  [type] $langcode    [description]
+ * @return [type]              [description]
+ */
 function block_custom_block_translate($form, &$form_state, $delta, $langcode) {
   $form['langcode'] = array('#type' => 'hidden', '#value' => $langcode);
 
