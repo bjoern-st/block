@@ -338,6 +338,7 @@ function block_custom_block_save(array $edit, $delta = NULL, $langcode = NULL) {
   }
   // If langcode == NULL we come from add or edit form, so
   // store the default values.
+  // Same if the langcode is the deafault language.
   if ($langcode === NULL || (isset($block['default_language']) &&
       ($langcode == $block['default_language']))) {
     foreach ($block as $key => $value) {
