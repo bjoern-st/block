@@ -338,7 +338,8 @@ function block_custom_block_save(array $edit, $delta = NULL, $langcode = NULL) {
   }
   // If langcode == NULL we come from add or edit form, so
   // store the default values.
-  if ($langcode === NULL) {
+  if ($langcode === NULL || (isset($block['default_language']) &&
+      ($langcode == $block['default_language']))) {
     foreach ($block as $key => $value) {
       if (isset($edit[$key])) {
         $block[$key] = $edit[$key];
@@ -348,7 +349,10 @@ function block_custom_block_save(array $edit, $delta = NULL, $langcode = NULL) {
 
   // if langcode != NULL we come from a translation form, so
   // store the translation.
-  if ($translateable && ($langcode != NULL)) {
+  if ($translateable &&
+      ($langcode != NULL) &&
+      isset($block['default_language']) &&
+      ($langcode != $block['default_language'])) {
     // store the translations
     if (isset($edit['info'])) {
       $block['translations'][$langcode]['info'] = $edit['info'];
