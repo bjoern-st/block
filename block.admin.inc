@@ -68,17 +68,26 @@ function block_admin_list() {
  */
 function block_admin_configure($form, &$form_state, $delta = NULL) {
   if ($delta) {
-    $custom_block = block_custom_block_load($delta);
+    $langcode = NULL;
+    if (module_exists('language') && !isset($form['langcode'])) {
+      // Get the current Language and try to load the block in that Language.
+      global $language;
+      $langcode = $language->langcode;
+    }
+    elseif (isset($form['langcode'])) {
+      $langcode = $form['langcode']['#value'];
+    }
+    $custom_block = block_custom_block_load($delta, $langcode);
   }
   else {
     $custom_block = array(
       'info' => '',
       'title' => '',
       'body' => array('value' => '', 'format' => NULL),
-      'default_language' => LANGUAGE_NONE,
+      // 'default_language' => LANGUAGE_NONE,
     );
     if (module_exists('language')) {
-      $custom_block['default_language'] = array();
+      $custom_block['default_language'] = LANGUAGE_NONE;
     }
   }
   if ($custom_block['info']) {

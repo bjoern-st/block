@@ -149,12 +149,7 @@ function block_block_save($delta, &$edit = array()) {
  * Generates the administrator-defined blocks for display.
  */
 function block_block_view($delta = '') {
-  $langcode = NULL;
-  if (module_exists('translation')) {
-    global $language;
-    $langcode = $language->langcode;
-  }
-  $block = block_custom_block_load($delta, $langcode);
+  $block = block_custom_block_load($delta);
   if (!$block) {
     return array();
   }
@@ -180,20 +175,21 @@ function block_block_view($delta = '') {
  *   - format: Filter ID of the filter format for the body.
  */
 function block_custom_block_load($delta, $langcode = NULL) {
-  $translateable = module_exists('translation');
+  if (module_exists('translation') && $langcode == NULL) {
+    global $language;
+    $langcode = $language->langcode;
+  }
 
   $blocks = block_block_info();
   if (isset($blocks[$delta])) {
     $block = $blocks[$delta];
 
-    if ($translateable) {
-      if ($langcode != NULL) {
-        if (isset($block['translations'][$langcode])) {
-          // replace title and body
-          $block['info'] = isset($block['translations'][$langcode]['info']) ? $block['translations'][$langcode]['info'] : $block['info'];
-          $block['title'] = isset($block['translations'][$langcode]['title']) ? $block['translations'][$langcode]['title'] : $block['title'];
-          $block['body'] = isset($block['translations'][$langcode]['body']) ? $block['translations'][$langcode]['body'] : $block['body'];
-        }
+    if ($langcode != NULL) {
+      if (isset($block['translations'][$langcode])) {
+        // replace title and body
+        $block['info'] = isset($block['translations'][$langcode]['info']) ? $block['translations'][$langcode]['info'] : $block['info'];
+        $block['title'] = isset($block['translations'][$langcode]['title']) ? $block['translations'][$langcode]['title'] : $block['title'];
+        $block['body'] = isset($block['translations'][$langcode]['body']) ? $block['translations'][$langcode]['body'] : $block['body'];
       }
     }
 
@@ -279,6 +275,7 @@ function block_custom_block_form($edit = array(), $stand_alone = TRUE) {
       '#title' => t('Language'),
       '#description' => 'Please select the default language for this custum block.',
       '#options' => $options,
+      '#default_value' => language_default()->langcode,
     );
   }
 
