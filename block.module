@@ -261,8 +261,9 @@ function block_custom_block_form($edit = array(), $stand_alone = TRUE) {
     '#weight' => -17,
   );
 
-  // Add language select dropdown if variable is set.
-  // Should only be set if adding a new block.
+  // Add language select dropdown if variable is set and language is set to
+  // LANGUAGE_NONE.
+  // This combination should only be set if adding a new block.
   if (isset($edit['default_language']) && ($edit['default_language'] == LANGUAGE_NONE)) {
     $options = array(LANGUAGE_NONE => t('Language neutral'));
     $language_list = language_list();

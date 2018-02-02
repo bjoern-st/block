@@ -84,7 +84,6 @@ function block_admin_configure($form, &$form_state, $delta = NULL) {
       'info' => '',
       'title' => '',
       'body' => array('value' => '', 'format' => NULL),
-      // 'default_language' => LANGUAGE_NONE,
     );
     if (module_exists('language')) {
       $custom_block['default_language'] = LANGUAGE_NONE;
@@ -229,9 +228,7 @@ function block_custom_block_delete_submit($form, &$form_state) {
 
 
 /**
- * Form constructor for the block translation list.
- *
- * Also used by block_add_block_form() for adding a new custom block.
+ * Form constructor for the block translation list form.
  *
  * @param $form
  *   The form.
@@ -303,12 +300,19 @@ function block_custom_block_translate_list($form, &$form_state, $delta) {
 
 
 /**
- * [block_custom_block_translate description]
- * @param  [type] $form        [description]
- * @param  [type] &$form_state [description]
- * @param  [type] $delta       [description]
- * @param  [type] $langcode    [description]
- * @return [type]              [description]
+ * Menu callback function for translating a single block.
+ *
+ * @param  array $form
+ *   The later form.
+ * @param  array &$form_state
+ *   The form state array.
+ * @param  string $delta
+ *   The unique machine name of that block.
+ * @param  string $langcode
+ *   The language code value to translate to.
+ *
+ * @return array
+ *   The configuration form.
  */
 function block_custom_block_translate($form, &$form_state, $delta, $langcode) {
   $form['langcode'] = array('#type' => 'hidden', '#value' => $langcode);
