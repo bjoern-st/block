@@ -56,8 +56,8 @@ function block_menu() {
     'context' => MENU_CONTEXT_NONE,
     'file' => 'block.admin.inc',
   );
-  $items['admin/structure/block/manage/%/translate'] = array(
-    'title' => 'Translate blocks',
+  $items['admin/structure/block/manage/%/translation'] = array(
+    'title' => 'Translate',
     'page callback' => 'backdrop_get_form',
     'page arguments' => array('block_custom_block_translate_list', 4),
     'access arguments' => array('translate blocks'),
@@ -70,7 +70,7 @@ function block_menu() {
     'page callback' => 'backdrop_get_form',
     'page arguments' => array('block_custom_block_translate', 4, 6),
     'access arguments' => array('translate blocks'),
-    'type' => MENU_LOCAL_TASK,
+    'type' => MENU_LOCAL_ACTION,
     'context' => MENU_CONTEXT_NONE,
     'file' => 'block.admin.inc',
   );
