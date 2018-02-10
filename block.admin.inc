@@ -306,6 +306,10 @@ function block_custom_block_translate_list($form, &$form_state, $delta) {
     $rows[] = $row;
   }
 
+  if ($custom_block['info']) {
+    backdrop_set_title(t("Translate '%name' block", array('%name' => $custom_block['info'])), PASS_THROUGH);
+  }
+
   return array(
     '#theme' => 'table__block_admin_list',
     '#rows' => $rows,
