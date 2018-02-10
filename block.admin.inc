@@ -239,7 +239,7 @@ function block_custom_block_delete_submit($form, &$form_state) {
  * @ingroup forms
  */
 function block_custom_block_translate_list($form, &$form_state, $delta) {
-  $custom_block = block_custom_block_load($delta);
+  $custom_block = block_custom_block_load($delta, 'LANGUAGE_NONE');
 
   $language_list = language_list();
 
@@ -271,22 +271,28 @@ function block_custom_block_translate_list($form, &$form_state, $delta) {
 
   foreach ($language_list as $langcode => $item) {
     $row = array();
+    $links = array();
 
     // Check if this is the source language.
     if (isset($custom_block['default_language']) && ($langcode == $custom_block['default_language'])) {
       $row[] = t($item->name) . ' ' . t('(source)');
+      $row[] = isset($custom_block['title']) ? $custom_block['title'] : t('N/A');
+      $row[] = t('Source');
+      $links['edit'] = array(
+        'title' => t('EDIT'),
+        'href' => 'admin/structure/block/manage/' . $delta . '/translate/' . $langcode,
+      );
     }
     else {
       $row[] = t($item->name);
+      $row[] = isset($custom_block['translations'][$langcode]['title']) ? $custom_block['translations'][$langcode]['title'] : t('N/A');
+      $row[] = isset($custom_block['translations'][$langcode]) ? t('Translated') : t('Not Translated');
+      $links['edit'] = array(
+        'title' => isset($custom_block['translations'][$langcode]) ? t('EDIT') : t('ADD TRANSLATION'),
+        'href' => 'admin/structure/block/manage/' . $delta . '/translate/' . $langcode,
+      );
     }
-    $row[] = isset($custom_block['translations'][$langcode]['title']) ? $custom_block['translations'][$langcode]['title'] : t('N/A');
-    $row[] = isset($custom_block['translations'][$langcode]) ? t('Translated') : t('Not Translated');
 
-    $links = array();
-    $links['edit'] = array(
-      'title' => isset($custom_block['translations'][$langcode]) ? t('EDIT') : t('ADD TRANSLATION'),
-      'href' => 'admin/structure/block/manage/' . $delta . '/translate/' . $langcode,
-    );
     $operations = array(
       '#type' => 'operations',
       '#links' => $links,
