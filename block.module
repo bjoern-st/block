@@ -70,7 +70,7 @@ function block_menu() {
     'page callback' => 'backdrop_get_form',
     'page arguments' => array('block_custom_block_translate', 4, 6),
     'access arguments' => array('translate blocks'),
-    'type' => MENU_LOCAL_ACTION,
+    'type' => MENU_NORMAL_ITEM,
     'context' => MENU_CONTEXT_NONE,
     'file' => 'block.admin.inc',
   );
