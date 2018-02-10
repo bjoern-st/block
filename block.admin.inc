@@ -77,6 +77,7 @@ function block_admin_configure($form, &$form_state, $delta = NULL) {
     elseif (isset($form['langcode'])) {
       $langcode = $form['langcode']['#value'];
     }
+    // Set or load the block.
     if (is_array($delta)) {
       $custom_block = $delta;
     }
@@ -267,7 +268,7 @@ function block_custom_block_translate_list($form, &$form_state, $delta) {
   if (isset($custom_block['default_language']) && ($custom_block['default_language'] == LANGUAGE_NONE)) {
     $row[] = t('Language neutral (source)');
     $row[] = isset($custom_block['title']) ? $custom_block['title'] : t('N/A');
-    $row[] = t('Not Translated');
+    $row[] = t('Source');
     $links = array();
     $links['edit'] = array(
       'title' => t('Edit'),
