@@ -360,10 +360,11 @@ function block_custom_block_translate_validate($form, &$form_state) {
  */
 function block_custom_block_translate_submit($form, &$form_state) {
   $langcode = NULL;
+  $delta = $form_state['values']['delta'];
   if (isset($form_state['values']['langcode'])) {
     $langcode = $form_state['values']['langcode'];
   }
   block_custom_block_save($form_state['values'], $form_state['values']['delta'], $langcode);
-  backdrop_set_message(t('The block has been created.'));
-  $form_state['redirect'] = 'admin/structure/block';
+  backdrop_set_message(t('The block translation has been saved.'));
+  $form_state['redirect'] = 'admin/structure/block/manage/' . $delta . '/translation';
 }
