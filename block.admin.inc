@@ -126,8 +126,16 @@ function block_admin_configure($form, &$form_state, $delta = NULL) {
     $path = '<front>';
   }
   $options = backdrop_parse_url($path);
+  // Check if we have a clean path without language prefix.
+  if (module_exists('language')) {
+    $path = $options['path'];
+    $language_list = language_list();
+    $result = language_url_split_prefix($path, $language_list);
+    if ($result[0] !== FALSE) {
+      $options['path'] = $result[1];
+    }
+  }
   $options['attributes']['class'][] = 'form-cancel';
-
   $form['actions'] = array('#type' => 'actions');
   $form['actions']['submit'] = array(
     '#type' => 'submit',
