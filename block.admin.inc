@@ -56,8 +56,10 @@ function block_admin_list() {
  *
  * Also used by block_add_block_form() for adding a new custom block.
  *
- * @param $module
- *   Name of the module that implements the block to be configured.
+ * @param array $form
+ *   An associative array containing the structure of a portion of the form.
+ * @param array $form_state
+ *   A keyed array containing the current state of the form.
  * @param $delta
  *   Unique ID of the block within the context of $module.
  *
@@ -155,6 +157,11 @@ function block_admin_configure($form, &$form_state, $delta = NULL) {
 /**
  * Form validation handler for block_admin_configure().
  *
+ * @param array $form
+ *   An associative array containing the structure of a portion of the form.
+ * @param array $form_state
+ *   A keyed array containing the current state of the form. 
+ *
  * @see block_admin_configure()
  * @see block_admin_configure_submit()
  */
@@ -171,6 +178,11 @@ function block_admin_configure_validate($form, &$form_state) {
 /**
  * Form submission handler for block_admin_configure().
  *
+ * @param array $form
+ *   An associative array containing the structure of a portion of the form.
+ * @param array $form_state
+ *   A keyed array containing the current state of the form. 
+ *
  * @see block_admin_configure()
  * @see block_admin_configure_validate()
  */
@@ -182,6 +194,11 @@ function block_admin_configure_submit($form, &$form_state) {
 
 /**
  * Form constructor for the add block form.
+ *
+ * @param array $form
+ *   An associative array containing the structure of a portion of the form.
+ * @param array $form_state
+ *   A keyed array containing the current state of the form. 
  *
  * @see block_menu()
  * @see block_add_block_form_validate()
@@ -195,6 +212,11 @@ function block_add_block_form($form, &$form_state) {
 /**
  * Form validation handler for block_add_block_form().
  *
+ * @param array $form
+ *   An associative array containing the structure of a portion of the form.
+ * @param array $form_state
+ *   A keyed array containing the current state of the form. 
+ *
  * @see block_add_block_form()
  * @see block_add_block_form_submit()
  */
@@ -205,6 +227,12 @@ function block_add_block_form_validate($form, &$form_state) {
 /**
  * Form submission handler for block_add_block_form().
  *
+ *
+ * @param array $form
+ *   An associative array containing the structure of a portion of the form.
+ * @param array $form_state
+ *   A keyed array containing the current state of the form.
+ * 
  * Saves the new custom block.
  *
  * @see block_add_block_form()
@@ -219,9 +247,10 @@ function block_add_block_form_submit($form, &$form_state) {
 /**
  * Form constructor for the custom block deletion form.
  *
- * @param $module
- *   The name of the module that implements the block to be deleted. This should
- *   always equal 'block' since it only allows custom blocks to be deleted.
+ * @param array $form
+ *   An associative array containing the structure of a portion of the form.
+ * @param array $form_state
+ *   A keyed array containing the current state of the form.
  * @param $delta
  *   The unique ID of the block within the context of $module.
  *
@@ -239,6 +268,11 @@ function block_custom_block_delete($form, &$form_state, $delta) {
 /**
  * Form submission handler for block_custom_block_delete().
  *
+ * @param array $form
+ *   An associative array containing the structure of a portion of the form.
+ * @param array $form_state
+ *   A keyed array containing the current state of the form. 
+ *
  * @see block_custom_block_delete()
  */
 function block_custom_block_delete_submit($form, &$form_state) {
@@ -251,10 +285,10 @@ function block_custom_block_delete_submit($form, &$form_state) {
 /**
  * Form constructor for the block translation list form.
  *
- * @param $form
- *   The form.
- * @param $form_state
- *   The form_state
+ * @param array $form
+ *   An associative array containing the structure of a portion of the form.
+ * @param array $form_state
+ *   A keyed array containing the current state of the form.
  * @param $delta
  *   Unique ID of the block within the context of $module.
  * @ingroup forms
@@ -338,10 +372,10 @@ function block_custom_block_translate_list($form, &$form_state, $delta) {
 /**
  * Menu callback function for translating a single block.
  *
- * @param  array $form
- *   The later form.
- * @param  array &$form_state
- *   The form state array.
+ * @param array $form
+ *   An associative array containing the structure of a portion of the form.
+ * @param array $form_state
+ *   A keyed array containing the current state of the form.
  * @param  string $delta
  *   The unique machine name of that block.
  * @param  string $langcode
@@ -359,6 +393,11 @@ function block_custom_block_translate($form, &$form_state, $delta, $langcode) {
 /**
  * Form validation handler for block_custom_block_translate().
  *
+ * @param array $form
+ *   An associative array containing the structure of a portion of the form.
+ * @param array $form_state
+ *   A keyed array containing the current state of the form. 
+ *
  * @see block_custom_block_translate()
  * @see block_custom_block_translate_submit()
  */
@@ -370,6 +409,11 @@ function block_custom_block_translate_validate($form, &$form_state) {
  * Form submission handler for block_custom_block_translate().
  *
  * Saves the new custom block.
+ *
+ * @param array $form
+ *   An associative array containing the structure of a portion of the form.
+ * @param array $form_state
+ *   A keyed array containing the current state of the form.
  *
  * @see block_custom_block_translate()
  * @see block_custom_block_translate_validate()
