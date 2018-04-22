@@ -106,9 +106,8 @@ function block_admin_configure($form, &$form_state, $delta = NULL) {
 
   // Set title for translate block form.
   if (isset($form['langcode'])) {
-    $language_list = language_list();
-    $language = $language_list[$form['langcode']['#value']]->name;
-    backdrop_set_title(t("Translate '%name' block to %language", array('%name' => $custom_block['info'], '%language' => $language)), PASS_THROUGH);
+    $language = $language = language_load($form['langcode']['#value']);
+    backdrop_set_title(t("Translate '%name' block to %language", array('%name' => $custom_block['info'], '%language' => $language->name)), PASS_THROUGH);
   }
 
   // Call our own block configuration form (also used by Layout module).
