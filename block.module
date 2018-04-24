@@ -13,7 +13,7 @@ function block_permission() {
       'title' => t('Administer custom blocks'),
     ),
   );
-  if (module_exists('translation')) {
+  if (module_exists('language')) {
     $permissions['translate blocks'] = array(
       'title' => t('Translate custom blocks') );
   }
@@ -300,7 +300,7 @@ function block_custom_block_form($edit = array(), $stand_alone = TRUE) {
 
     // Add a notice for translation.
     if (module_exists('language')) {
-      $form['reusable']['#description'] .= t('NOTE: You have module "language" enabled. If you want to make this block translatable, this block must be marked as reusable.');
+      $form['reusable']['#description'] .= t('If you want to make this block translatable, this block must be marked as reusable.');
     }
   }
 
@@ -325,13 +325,13 @@ function block_custom_block_form($edit = array(), $stand_alone = TRUE) {
  * @param $langcode
  *   The language code for the block.
  *   If set, only the translation is saved.
- *  
- * Custom blocks have two new keys in the config. 
- * - default_langcode and 
+ *
+ * Custom blocks have two new keys in the config.
+ * - default_langcode and
  * - translations
- * 
+ *
  * default_langcode holds the langcode of the source language - the language the block is created with.
- * In the translations key the translations of the other languages are stored. 
+ * In the translations key the translations of the other languages are stored.
  * The structure of the tranlations is:
  * [langcode] => array(
  *    'info' => '',
