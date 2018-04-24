@@ -29,7 +29,7 @@ function block_admin_list() {
       'title' => t('Delete'),
       'href' => 'admin/structure/block/manage/' . $delta . '/delete',
     );
-    if (module_exists('translation')) {
+    if (module_exists('language')) {
       $links['translate'] = array(
         'title' => t('Translate'),
         'href' => 'admin/structure/block/manage/' . $delta . '/translation',
@@ -123,12 +123,7 @@ function block_admin_configure($form, &$form_state, $delta = NULL) {
   $options = backdrop_parse_url($path);
   // Check if we have a clean path without language prefix.
   if (module_exists('language')) {
-    $path = $options['path'];
-    $language_list = language_list();
-    $result = language_url_split_prefix($path, $language_list);
-    if ($result[0] !== FALSE) {
-      $options['path'] = $result[1];
-    }
+    // list(, $options['path']) = language_url_split_prefix($options['path'], language_list());
   }
   $options['attributes']['class'][] = 'form-cancel';
   $form['actions'] = array('#type' => 'actions');
@@ -153,7 +148,7 @@ function block_admin_configure($form, &$form_state, $delta = NULL) {
  * @param array $form
  *   An associative array containing the structure of a portion of the form.
  * @param array $form_state
- *   A keyed array containing the current state of the form. 
+ *   A keyed array containing the current state of the form.
  *
  * @see block_admin_configure()
  * @see block_admin_configure_submit()
@@ -174,7 +169,7 @@ function block_admin_configure_validate($form, &$form_state) {
  * @param array $form
  *   An associative array containing the structure of a portion of the form.
  * @param array $form_state
- *   A keyed array containing the current state of the form. 
+ *   A keyed array containing the current state of the form.
  *
  * @see block_admin_configure()
  * @see block_admin_configure_validate()
@@ -191,7 +186,7 @@ function block_admin_configure_submit($form, &$form_state) {
  * @param array $form
  *   An associative array containing the structure of a portion of the form.
  * @param array $form_state
- *   A keyed array containing the current state of the form. 
+ *   A keyed array containing the current state of the form.
  *
  * @see block_menu()
  * @see block_add_block_form_validate()
@@ -208,7 +203,7 @@ function block_add_block_form($form, &$form_state) {
  * @param array $form
  *   An associative array containing the structure of a portion of the form.
  * @param array $form_state
- *   A keyed array containing the current state of the form. 
+ *   A keyed array containing the current state of the form.
  *
  * @see block_add_block_form()
  * @see block_add_block_form_submit()
@@ -225,7 +220,7 @@ function block_add_block_form_validate($form, &$form_state) {
  *   An associative array containing the structure of a portion of the form.
  * @param array $form_state
  *   A keyed array containing the current state of the form.
- * 
+ *
  * Saves the new custom block.
  *
  * @see block_add_block_form()
@@ -264,7 +259,7 @@ function block_custom_block_delete($form, &$form_state, $delta) {
  * @param array $form
  *   An associative array containing the structure of a portion of the form.
  * @param array $form_state
- *   A keyed array containing the current state of the form. 
+ *   A keyed array containing the current state of the form.
  *
  * @see block_custom_block_delete()
  */
@@ -389,7 +384,7 @@ function block_custom_block_translate($form, &$form_state, $delta, $langcode) {
  * @param array $form
  *   An associative array containing the structure of a portion of the form.
  * @param array $form_state
- *   A keyed array containing the current state of the form. 
+ *   A keyed array containing the current state of the form.
  *
  * @see block_custom_block_translate()
  * @see block_custom_block_translate_submit()
