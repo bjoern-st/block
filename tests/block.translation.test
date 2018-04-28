@@ -120,26 +120,29 @@ class BlockTranslationTestCase extends BackdropWebTestCase {
     $layout->addBlock('block', $custom_block['delta'], 'sidebar');
     $layout->save();
 
+    // Get the default langcode.
+    $default_langcode = language_default()->langcode;
+
     // Confirm that the custom block is being displayed in the default language.
-    $this->backdropGet('it/user');
+    $this->backdropGet('user');
     $this->assertText('Testblock created in default language', 'Custom block successfully being displayed.');
 
     $languages = language_list();
 
     // Switch language to italy.
     global $language;
-    $language = $languages['it'];
+    $language = $languages['fr'];
 
     // Get the system config.
     $core_config = config('system.core');
-    $core_config->set('language_default', 'it');
+    $core_config->set('language_default', 'fr');
     $core_config->save();
 
     $this->resetAll();
 
     // Confirm that the custom block is being displayed in italy.
     $this->backdropGet('user');
-    $this->assertText('Testblock translated to italian', 'Translated block successfully being displayed in italian.');
+    $this->assertText('Testblock translated to french', 'Translated block successfully being displayed in french.');
   }
 
   private function addLanguage($language_code) {
