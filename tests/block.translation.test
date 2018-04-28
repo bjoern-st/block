@@ -38,11 +38,18 @@ class BlockTranslationTestCase extends BackdropWebTestCase {
     // Check if language module was enabled.
     $this->assertTrue(module_exists('language'), 'Language module was enabled successfully.');
 
+    $languages = array(
+      'it' => 'italian',
+      'fr' => 'french',
+      'es' => 'spanish',
+      'fi' => 'finnish',
+      'nl' => 'dutch',
+    );
+
     // Installing new languages.
-    $this->addLanguage('it');
-    $this->addLanguage('es');
-    $this->addLanguage('de');
-    $this->addLanguage('fr');
+    foreach ($languages as $key => $value) {
+      $this->addLanguage($key);
+    }
 
     backdrop_static_reset('language_list');
 
@@ -77,45 +84,24 @@ class BlockTranslationTestCase extends BackdropWebTestCase {
 
     // Test translation form.
     $this->backdropGet('admin/structure/block/manage/' . $custom_block['delta'] . '/translation');
-    $this->assertLinkByHref('admin/structure/block/manage/' . $custom_block['delta'] . '/translate/it', 0, 'Custom block translate link for italian found.');
-    $this->assertLinkByHref('admin/structure/block/manage/' . $custom_block['delta'] . '/translate/es', 0, 'Custom block translate link for spanish found.');
-    $this->assertLinkByHref('admin/structure/block/manage/' . $custom_block['delta'] . '/translate/de', 0, 'Custom block translate link for german found.');
-    $this->assertLinkByHref('admin/structure/block/manage/' . $custom_block['delta'] . '/translate/fr', 0, 'Custom block translate link for french found.');
+
+    // Check if the translation links are set.
+    foreach ($languages as $key => $value) {
+      $this->assertLinkByHref('admin/structure/block/manage/' . $custom_block['delta'] . '/translate/' . $key, 0, 'Found custom block translate link for ' . $value . '.');
+    }
 
     // Translate the blocks.
-    $this->backdropGet('admin/structure/block/manage/' . $custom_block['delta'] . '/translate/it');
-    // Translate custom block by filling out the input.
-    $translated_block = array();
-    $translated_block['info'] = $this->randomName(8);
-    $translated_block['title'] = 'Testblock translated to italian';
-    $translated_block['body[value]'] = $this->randomName(32);
-    $this->backdropPost(NULL, $translated_block, 'Save block');
+    foreach ($languages as $key => $value) {
+      $this->backdropGet('admin/structure/block/manage/' . $custom_block['delta'] . '/translate/' . $key);
+      // Translate custom block by filling out the input.
+      $translated_block = array();
+      $translated_block['info'] = $this->randomName(8);
+      $translated_block['title'] = 'Testblock translated to ' . $value;
+      $translated_block['body[value]'] = $this->randomName(32);
+      $this->backdropPost(NULL, $translated_block, 'Save block');
+    }
 
-    $this->backdropGet('admin/structure/block/manage/' . $custom_block['delta'] . '/translate/es');
-    // Translate custom block by filling out the input.
-    $translated_block = array();
-    $translated_block['info'] = $this->randomName(8);
-    $translated_block['title'] = 'Testblock translated to spanish';
-    $translated_block['body[value]'] = $this->randomName(32);
-    $this->backdropPost(NULL, $translated_block, 'Save block');
-
-    $this->backdropGet('admin/structure/block/manage/' . $custom_block['delta'] . '/translate/de');
-    // Translate custom block by filling out the input.
-    $translated_block = array();
-    $translated_block['info'] = $this->randomName(8);
-    $translated_block['title'] = 'Testblock translated to german';
-    $translated_block['body[value]'] = $this->randomName(32);
-    $this->backdropPost(NULL, $translated_block, 'Save block');
-
-    $this->backdropGet('admin/structure/block/manage/' . $custom_block['delta'] . '/translate/fr');
-    // Translate custom block by filling out the input.
-    $translated_block = array();
-    $translated_block['info'] = $this->randomName(8);
-    $translated_block['title'] = 'Testblock translated to french';
-    $translated_block['body[value]'] = $this->randomName(32);
-    $this->backdropPost(NULL, $translated_block, 'Save block');
-
-      // Set the created custom block to a specific region.
+    // Set the created custom block to a specific region.
     $layout = layout_load('default');
     $layout->addBlock('block', $custom_block['delta'], 'sidebar');
     $layout->save();
@@ -127,22 +113,20 @@ class BlockTranslationTestCase extends BackdropWebTestCase {
     $this->backdropGet('user');
     $this->assertText('Testblock created in default language', 'Custom block successfully being displayed.');
 
-    $languages = language_list();
+    // Check if the translated blocks appear.
+    foreach ($languages as $key => $value) {
+      // Set the default language.
+      // Get the system config.
+      $core_config = config('system.core');
+      $core_config->set('language_default', $key);
+      $core_config->save();
 
-    // Switch language to italy.
-    global $language;
-    $language = $languages['fr'];
+      $this->resetAll();
 
-    // Get the system config.
-    $core_config = config('system.core');
-    $core_config->set('language_default', 'fr');
-    $core_config->save();
-
-    $this->resetAll();
-
-    // Confirm that the custom block is being displayed in italy.
-    $this->backdropGet('user');
-    $this->assertText('Testblock translated to french', 'Translated block successfully being displayed in french.');
+      // Confirm that the custom block is being displayed in italy.
+      $this->backdropGet('user');
+      $this->assertText('Testblock translated to ' . $value, 'Translated block successfully being displayed in ' . $value . '.');
+    }
   }
 
   private function addLanguage($language_code) {
