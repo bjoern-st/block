@@ -175,7 +175,7 @@ function block_block_view($delta = '') {
  *   - format: Filter ID of the filter format for the body.
  */
 function block_custom_block_load($delta, $langcode = NULL) {
-  if (module_exists('translation') && $langcode == NULL) {
+  if (module_exists('language') && $langcode == NULL) {
     global $language;
     $langcode = $language->langcode;
   }
