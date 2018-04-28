@@ -12,6 +12,7 @@ class BlockTranslationTestCase extends BackdropWebTestCase {
     $modules = array (
       'block_test',
       'language',
+      'locale',
     );
     parent::setUp($modules);
 
@@ -68,7 +69,7 @@ class BlockTranslationTestCase extends BackdropWebTestCase {
     $custom_block = config_get('block.custom.'.$custom_block['delta']);
     $this->assertNotNull($custom_block['delta'], 'Custom block found in configuration.');
 
-    // Verify presence of configure and delete links for custom block.
+    // Verify presence of configure, delete and translate links for custom block.
     $this->backdropGet('admin/structure/block');
     $this->assertLinkByHref('admin/structure/block/manage/' . $custom_block['delta'] . '/configure', 0, 'Custom block configure link found.');
     $this->assertLinkByHref('admin/structure/block/manage/' . $custom_block['delta'] . '/delete', 0, 'Custom block delete link found.');
@@ -128,6 +129,13 @@ class BlockTranslationTestCase extends BackdropWebTestCase {
     // Switch language to italy.
     global $language;
     $language = $languages['it'];
+
+    // Get the system config.
+    $core_config = config('system.core');
+    $core_config->set('language_default', 'it');
+    $core_config->save();
+
+    $this->resetAll();
 
     // Confirm that the custom block is being displayed in italy.
     $this->backdropGet('user');
