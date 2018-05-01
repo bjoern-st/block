@@ -54,7 +54,8 @@ function block_menu() {
     'title' => 'Translate',
     'page callback' => 'backdrop_get_form',
     'page arguments' => array('block_custom_block_translate_list', 4),
-    'access arguments' => array('administer blocks'),
+    'access arguments' => array('administer blocks', 4),
+    'access callback' => 'block_menu_access',
     'type' => MENU_LOCAL_TASK,
     'context' => MENU_CONTEXT_NONE,
     'file' => 'block.admin.inc',
@@ -89,6 +90,28 @@ function block_config_info() {
     'group' => t('Custom Blocks'),
   );
   return $prefixes;
+}
+
+/**
+ * Callback function for menu access.
+ * @param  string $permission
+ *   The permission for menu access.
+ * @param  string $delta
+ *   The name delta of the block from the URL.
+ * @return bool
+ *   TRUE if user access is TRUE and a language is set for the block.
+ */
+function block_menu_access($permission, $delta) {
+  $blocks =  block_block_info();
+  if (isset($blocks[$delta])) {
+    $block = $blocks[$delta];
+    if (isset($block['default_langcode']) &&
+        ($block['default_langcode'] != LANGUAGE_NONE) &&
+        user_access($permission)) {
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 /**
