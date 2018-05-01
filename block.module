@@ -11,11 +11,6 @@ function block_permission() {
   $permissions['administer blocks'] = array(
     'title' => t('Administer custom blocks'),
   );
-  if (module_exists('locale')) {
-    $permissions['translate blocks'] = array(
-      'title' => t('Translate custom blocks'),
-    );
-  }
   return $permissions;
 }
 
@@ -59,7 +54,7 @@ function block_menu() {
     'title' => 'Translate',
     'page callback' => 'backdrop_get_form',
     'page arguments' => array('block_custom_block_translate_list', 4),
-    'access arguments' => array('translate blocks'),
+    'access arguments' => array('administer blocks'),
     'type' => MENU_LOCAL_TASK,
     'context' => MENU_CONTEXT_NONE,
     'file' => 'block.admin.inc',
@@ -68,7 +63,7 @@ function block_menu() {
     'title' => 'Translate block',
     'page callback' => 'backdrop_get_form',
     'page arguments' => array('block_custom_block_translate', 4, 6),
-    'access arguments' => array('translate blocks'),
+    'access arguments' => array('administer blocks'),
     'type' => MENU_NORMAL_ITEM,
     'context' => MENU_CONTEXT_NONE,
     'file' => 'block.admin.inc',
@@ -385,7 +380,7 @@ function block_custom_block_save(array $edit, $delta = NULL, $langcode = NULL) {
       ($langcode != NULL) &&
       isset($block['default_langcode']) &&
       ($langcode != $block['default_langcode'])) {
-    // store the translations
+    // Store the translations.
     if (isset($edit['info'])) {
       $block['translations'][$langcode]['info'] = $edit['info'];
     }
