@@ -31,7 +31,7 @@ function block_admin_list() {
       'title' => t('Delete'),
       'href' => 'admin/structure/block/manage/' . $delta . '/delete',
     );
-    if (module_exists('locale')) {
+    if (module_exists('locale') && $block_info['default_langcode'] != LANGUAGE_NONE) {
       $links['translate'] = array(
         'title' => t('Translate'),
         'href' => 'admin/structure/block/manage/' . $delta . '/translation',
