@@ -274,9 +274,9 @@ function block_custom_block_form($edit = array(), $stand_alone = TRUE) {
     '#weight' => -16,
   );
 
-  // Add language select dropdown if edit info is empty.
+  // Add language select dropdown if language is not set.
   // This combination should only be set if adding a new block.
-  if (isset($edit['default_langcode']) && empty($edit['info'])) {
+  if (module_exists('locale') && $edit['default_langcode'] == LANGUAGE_NONE) {
     $options = array(LANGUAGE_NONE => t('- None -'));
     $language_list = language_list();
     foreach ($language_list as $value) {
@@ -288,7 +288,7 @@ function block_custom_block_form($edit = array(), $stand_alone = TRUE) {
       '#title' => t('Language'),
       '#description' => 'Please select the default language for this custom block.',
       '#options' => $options,
-      '#default_value' => language_default()->langcode,
+      '#default_value' => $edit['default_langcode'],
     );
   }
 
