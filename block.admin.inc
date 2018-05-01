@@ -81,7 +81,12 @@ function block_admin_configure($form, &$form_state, $delta = NULL) {
     elseif (isset($form['langcode'])) {
       $langcode = $form['langcode']['#value'];
     }
-    $custom_block = block_custom_block_load($delta, $langcode);
+    if (is_array($delta)) {
+      $custom_block = $delta;
+    }
+    else {
+      $custom_block = block_custom_block_load($delta, $langcode);
+    }
   }
   else {
     $custom_block = array(
